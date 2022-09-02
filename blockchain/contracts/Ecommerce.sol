@@ -13,10 +13,17 @@ contract Ecommerce {
         string metadataUrl
     );
 
+    /* Modifiers */
+    modifier onlyOwner () {
+        if(msg.sender != address(this)){
+            revert Ecommerce__YouAreNoteOwner();
+        }
+        _;
+    }
 
     /* Logics */
 
-    function addProduct (uint256 _price, uint32 _quantity, string memory _metadata, string memory _category) external {
+    function addProduct (uint256 _price, uint32 _quantity, string memory _metadata, string memory _category) external onlyOwner {
          Product newProduct = new Product(
             _price,
             _quantity,
