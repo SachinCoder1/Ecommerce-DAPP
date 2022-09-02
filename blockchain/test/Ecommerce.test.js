@@ -5,37 +5,26 @@ const {
 const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
 
-describe("Lock", function () {
+describe("Ecommerce", function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
   async function deployOneYearLockFixture() {
-    const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-    const ONE_GWEI = 1_000_000_000;
-
-    const lockedAmount = ONE_GWEI;
-    const unlockTime = (await time.latest()) + ONE_YEAR_IN_SECS;
-
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners();
 
-    const Lock = await ethers.getContractFactory("Lock");
-    const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+    const Ecommerce = await ethers.getContractFactory("Ecommerce");
+    const ecommerce = await Ecommerce.deploy();
 
-    return { lock, unlockTime, lockedAmount, owner, otherAccount };
+    return { ecommerce, owner, otherAccount };
   }
 
   describe("Deployment", function () {
-    it("Should set the right unlockTime", async function () {
-      const { lock, unlockTime } = await loadFixture(deployOneYearLockFixture);
-
-      expect(await lock.unlockTime()).to.equal(unlockTime);
-    });
-
     it("Should set the right owner", async function () {
-      const { lock, owner } = await loadFixture(deployOneYearLockFixture);
+      const { ecommerce, owner } = await loadFixture(deployOneYearLockFixture);
+      expect(ecommerce.addProduct()).not.to.be.reverted;
 
-      expect(await lock.owner()).to.equal(owner.address);
+      expect(await ecommerce.addProduct()).to.not.equals(owner.address);
     });
 
     it("Should receive and store the funds to lock", async function () {
@@ -76,7 +65,6 @@ describe("Lock", function () {
         // We can increase the time in Hardhat Network
         await time.increaseTo(unlockTime);
 
-        // We use lock.connect() to send a transaction from another account
         await expect(lock.connect(otherAccount).withdraw()).to.be.revertedWith(
           "You aren't the owner"
         );
@@ -87,7 +75,6 @@ describe("Lock", function () {
           deployOneYearLockFixture
         );
 
-        // Transactions are sent using the first signer by default
         await time.increaseTo(unlockTime);
 
         await expect(lock.withdraw()).not.to.be.reverted;
