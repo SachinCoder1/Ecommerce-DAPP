@@ -36,9 +36,19 @@ contract Product {
         return newProduct;
     }
 
+    // update the quantity of the product.
     function updateQuantity(uint32 _quantity) external {
         newProduct.quantity = _quantity;
     }
 
-    
+     // Buy Product.
+    function buyProduct() external payable {
+        if(msg.value != newProduct.price){
+            revert Product__PriceNotMet(msg.value);
+        }
+         
+        emit productBought(msg.sender, block.timestamp, msg.value);
+
+    }
+
 }
