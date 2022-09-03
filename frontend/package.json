@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@material-tailwind/react": "^1.2.3",
+    "ethers": "^5.7.0",
+    "ipfs-http-client": "^57.0.3",
     "next": "12.2.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-icons": "^4.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.8",
