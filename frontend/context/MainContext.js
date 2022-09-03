@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { CONTRACT_OWNER_ADDRESS } from "../constants";
 
 export const MainContext = createContext("");
 
@@ -7,7 +8,7 @@ export const MainProvider = ({ children }) => {
 
   const isAdmin = () => {
     if(!accountAddress) return false;
-    if(process.env.NEXT_PUBLIC_CONTRACT_OWNER_ADDRESS === accountAddress){
+    if(CONTRACT_OWNER_ADDRESS === accountAddress){
         return true;
     }else{
         return false;
