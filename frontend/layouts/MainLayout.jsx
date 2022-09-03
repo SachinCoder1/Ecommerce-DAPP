@@ -4,7 +4,7 @@ import { ThemeProvider } from "@material-tailwind/react";
 
 import Navbar from "../components/navbar/Navbar";
 
-export default function MainLayout({ metaTitle, metaDescription, children }) {
+export default function MainLayout({ metaTitle, metaDescription, addPM=true, children }) {
   return (
     <div className="bg-gray-200 min-h-screen">
       <Head>
@@ -15,7 +15,7 @@ export default function MainLayout({ metaTitle, metaDescription, children }) {
       <nav>
         <Navbar />
       </nav>
-      <main className="md:mx-5 px-3 my-5 py-5 md:px-5">{children}</main>
+      <main className={`${addPM && "md:mx-5 px-3 my-5 py-5 md:px-5"}`}>{children}</main>
     </div>
   );
 }
