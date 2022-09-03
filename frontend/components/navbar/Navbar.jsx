@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { navLinks } from "../../data";
 import { AiOutlineMenuUnfold, AiOutlineMenuFold } from "react-icons/ai";
-import {useRouter} from 'next/router'
+import { useRouter } from "next/router";
 import WalletConnect from "../wallet/WalletConnect";
+import Logo from "../../subcomponents/logo/Logo";
+import { Button } from "@material-tailwind/react";
+import { urls } from "../../constants";
+import { MainContext } from "../../context/MainContext";
 
 export default function Navbar() {
-    const router = useRouter();
+  const router = useRouter();
+  const {isAdmin} = useContext(MainContext)
   const [isMobileNavOpen, setisMobileNavOpen] = useState(false); // For toggling the mobile nav
   return (
     <div>
@@ -17,11 +22,7 @@ export default function Navbar() {
               {/* Logo */}
               <div>
                 <span className="px-2 mr-2 md:border-r border-gray-800">
-                  <img
-                    src="https://www.freepnglogos.com/uploads/spotify-logo-png/file-spotify-logo-png-4.png"
-                    alt="alt placeholder"
-                    className="w-8 h-8 -mt-1 inline mx-auto"
-                  />
+                  <Logo />
                 </span>
               </div>
               <div className="px-2 md:flex gap-x-5 items-center justify-center flex-1 text-gray-900 bg-white font-medium capitalize hidden">
@@ -46,7 +47,8 @@ export default function Navbar() {
               </div>
 
               {/* After all nav links if you want any button in right then it will come here */}
-              <div>
+              <div className="flex items-center gap-x-2">
+             {isAdmin() && <Button onClick={() => router.push(urls.admin)} variant="text">Not User?</Button> }
                 <WalletConnect />
               </div>
 
@@ -77,11 +79,7 @@ export default function Navbar() {
             <div className="py-[.5px] w-64">
               <div className="w-full py-4 space-y-6 px-2 text-gray-900 bg-white rounded-lg min-h-screen  text-left capitalize font-medium shadow-lg">
                 {/* Logo */}
-                <img
-                  src="https://www.freepnglogos.com/uploads/spotify-logo-png/file-spotify-logo-png-4.png"
-                  alt="alt placeholder"
-                  className="w-8 h-8 mx-auto mb-5 "
-                />
+                <Logo />
 
                 {/* Links */}
                 {navLinks?.map(({ title, link, icon }, id) => (
