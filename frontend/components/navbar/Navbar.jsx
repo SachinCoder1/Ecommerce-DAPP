@@ -3,7 +3,7 @@ import Link from "next/link";
 import { navLinks } from "../../data";
 import { AiOutlineMenuUnfold, AiOutlineMenuFold } from "react-icons/ai";
 import {useRouter} from 'next/router'
-// import WalletConnect from "../wallet/WalletConnect";
+import WalletConnect from "../wallet/WalletConnect";
 
 export default function Navbar() {
     const router = useRouter();
@@ -47,7 +47,7 @@ export default function Navbar() {
 
               {/* After all nav links if you want any button in right then it will come here */}
               <div>
-                {/* <WalletConnect /> */}
+                <WalletConnect />
               </div>
 
               {/* Hamberger Menu  */}
@@ -101,7 +101,7 @@ export default function Navbar() {
                     </a>
                   </Link>
                 ))}
-                {/* <WalletConnect /> */}
+                <WalletConnect />
               </div>
             </div>
           </div>
