@@ -62,8 +62,8 @@ contract Ecommerce {
         emit productAdded(
             _category,
             block.timestamp,
-            productId,
             _price,
+            productId,
             _metadata
         );
     }
