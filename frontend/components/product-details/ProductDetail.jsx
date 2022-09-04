@@ -1,12 +1,20 @@
+import { Button, Input, Typography } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { FaEthereum } from "react-icons/fa";
 import { IPFS_URL } from "../../constants";
+import Modal from "../../subcomponents/modal/Modal";
 
 export default function ProductDetail({
+  updateProduct,
   productId,
   metadata,
   price,
   quantity,
+  quantityInput,
+  setQuantityInput,
+  open,
+  setOpen,
   children,
 }) {
   const [parsedMetaData, setParsedMetaData] = useState({});
@@ -38,8 +46,40 @@ export default function ProductDetail({
                   {parsedMetaData?.title}
                 </p>
                 <p className="text-gray-600">{parsedMetaData?.description}</p>
-                <p className="text-gray-600 text-3xl">
+                <p className="text-gray-600 text-3xl gap-x-1 flex items-center">
                   Total Quantity Available : {quantity} Units
+                  <span>
+                    <Modal open={open} setOpen={setOpen} text={parsedMetaData.title}>
+                      <div className="flex w-full text-center flex-col space-y-5">
+                        <Typography
+                          variant="lead"
+                          color="black"
+                          className="text-center"
+                        >
+                          Current Quantity : {quantity}
+                        </Typography>
+
+                        <Input
+                          name="quantity"
+                          type="number"
+                          value={quantityInput}
+                          onChange={(e) => {
+                            setQuantityInput(e.target.value);
+                          }}
+                          label="Enter New Quantity"
+                        />
+                        <Button
+                          onClick={() => updateProduct()}
+                          className="flex items-center justify-center text-base gap-x-2 bg-primary"
+                          fullWidth
+                          disabled={!quantityInput.length}
+                        >
+                          Update Now
+                          <AiOutlineArrowRight className="text-2xl" />
+                        </Button>
+                      </div>
+                    </Modal>
+                  </span>
                 </p>
                 <p className="font-bold md:text-4xl text-3xl text-green-500 flex items-center gap-x-1.5">
                   <span className="text-gray-600 text-xl">Price :</span>
