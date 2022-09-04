@@ -1,14 +1,34 @@
 import Head from "next/head";
 import Image from "next/image";
-import { CONTRACT_ADDRESS } from "../constants";
+import { CONTRACT_ADDRESS, IPFS_URL } from "../constants";
 import ContractABI from "../constants/Ecommerce.json";
-import { categories } from "../data";
 import MainLayout from "../layouts/MainLayout";
 import { ethers } from "ethers";
+import { useState } from "react";
+import Card1 from "../subcomponents/card/Card1";
 
-export default function Home({AllData}) {
-  console.log("All Data ", AllData)
-  return <MainLayout></MainLayout>;
+export default function Home({ AllData }) {
+  const [isLoading, setIsLoading] = useState(false);
+  console.log("All Data ", AllData);
+  return (
+    <MainLayout>
+      <div className="flex flex-wrap items-center gap-10">
+        {AllData.length
+          ? AllData.map((item, index) => (
+                <Card1
+                key={index}
+                metadata={item.metadata}
+                price={item.price}
+                publishedDate={item.timeStamp}
+                productId={item.productId}
+              />
+              ))
+          : !AllData.length && !isLoading
+          ? "No Campaigns Found"
+          : "Loading..."}
+      </div>
+    </MainLayout>
+  );
 }
 
 export async function getStaticProps() {
@@ -29,7 +49,7 @@ export async function getStaticProps() {
       return {
         metadata: args._metadata,
         productId: parseInt(args._productId),
-        _price: ethers.utils.formatEther(args._price),
+        price: ethers.utils.formatEther(args._price),
         timeStamp: parseInt(args._timestamp),
       };
     });
@@ -43,7 +63,4 @@ export async function getStaticProps() {
       AllData: AllData,
     },
   };
-
-
-
 }
