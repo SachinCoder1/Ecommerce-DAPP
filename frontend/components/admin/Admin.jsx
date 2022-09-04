@@ -41,6 +41,7 @@ export default function Admin() {
   });
 
   /* Use States ------------------------------------------------------------------ */
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -79,6 +80,7 @@ export default function Admin() {
     }
 
     try {
+      setIsLoading(true);
       const metadata = {
         title,
         description,
@@ -103,29 +105,33 @@ export default function Admin() {
         signer
       );
 
+
+
       const productData = await contract.addProduct(
         amountInWEI,
         qunatity,
         url,
         category
       );
-      await productData.wait();
       toast.promise(productData.wait(), {
         pending: "Wait...",
         success: "Product Successfully Added👌",
         error: "Some Error Occured. 🤯",
       });
+      await productData.wait();
 
       if (productData.to) {
         setFormData({ title: "", description: "", price: "", qunatity: "" });
         setFile("");
         setCategory("");
-
-    //  router.push("/pastcampigns");
+        setIsLoading(false);
+        
+        //  router.push("/pastcampigns");
       }
     } catch (error) {
       console.log("error... ", error);
       toast.error("Error occured. Please try Again.");
+      setIsLoading(false);
     }
   };
 
@@ -160,15 +166,6 @@ export default function Admin() {
           onChange={onChangeFiles}
           label="Select Image"
         />
-        <Input
-          //   color="green"
-          variant="outlined"
-          size="lg"
-          name="qunatity"
-          onChange={handleInputChange}
-          label="Total Quantity Of Product"
-          value={formData.qunatity}
-        />
         <div className="">
           {file && (
             <img
@@ -178,6 +175,15 @@ export default function Admin() {
             />
           )}
         </div>
+        <Input
+          //   color="green"
+          variant="outlined"
+          size="lg"
+          name="qunatity"
+          onChange={handleInputChange}
+          label="Total Quantity Of Product"
+          value={formData.qunatity}
+        />
         <div className="flex gap-x-4 w-full justify-center">
           <Input
             // color="green"
@@ -203,6 +209,7 @@ export default function Admin() {
           className="flex items-center justify-center gap-x-2 bg-primary"
           fullWidth
           onClick={handleClick}
+          disabled={isLoading}
         >
           <MdAddTask className="text-xl text-white" />
           Create Product
