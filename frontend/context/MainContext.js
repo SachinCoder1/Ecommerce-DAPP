@@ -1,5 +1,7 @@
+import { ethers } from "ethers";
 import { createContext, useState } from "react";
-import { CONTRACT_OWNER_ADDRESS } from "../constants";
+import { CONTRACT_ADDRESS, CONTRACT_OWNER_ADDRESS } from "../constants";
+import ContractABI from "../constants/Ecommerce.json";
 
 export const MainContext = createContext("");
 
@@ -15,12 +17,27 @@ export const MainProvider = ({ children }) => {
     }
   }
 
+  const requestContract = async () => {
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+  
+        const contract = new ethers.Contract(
+          CONTRACT_ADDRESS,
+          ContractABI.abi,
+          signer
+        );
+
+        return contract;
+  }
+
   return (
     <MainContext.Provider
       value={{
         accountAddress,
         setAccountAddress,
-        isAdmin
+        isAdmin,
+        requestContract
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import { Button, Input } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { ethers } from "ethers";
 import React, { useContext } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -7,12 +7,36 @@ import { CONTRACT_ADDRESS } from "../constants";
 import ContractABI from "../constants/Ecommerce.json";
 import { MainContext } from "../context/MainContext";
 import MainLayout from "../layouts/MainLayout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Productid({ ProductIdData }) {
   console.log("This is the product data -> ", ProductIdData);
-  const { accountAddress } = useContext(MainContext);
+  const { accountAddress, requestContract } = useContext(MainContext);
+
+  const transferFund = async () => {
+    try {
+        toast.info("Wait...")
+      const contract = await requestContract();
+
+      const transaction = await contract.buyProduct(ProductIdData.productId, {
+        value: ethers.utils.parseEther(ProductIdData.price),
+      });
+      toast.promise(transaction.wait(), {
+        pending: "Wait...",
+        success: "Product Bought Successfully! 👌",
+        error: "Some Error Occured. 🤯",
+      });
+      await transaction.wait();
+    } catch (error) {
+      console.log(error);
+      toast.error("Some Error Occured. 🤯")
+    }
+  };
+
   return (
     <MainLayout>
+        <ToastContainer autoClose={2500} />
       <ProductDetail
         productId={ProductIdData?.productId}
         metadata={ProductIdData?.metadata}
@@ -22,7 +46,7 @@ export default function Productid({ ProductIdData }) {
         {accountAddress ? (
           <>
             <Button
-              //   onClick={() => transferFund()}
+              onClick={() => transferFund()}
               className="flex items-center justify-center text-base gap-x-2 bg-primary"
               fullWidth
               disabled={!accountAddress}
