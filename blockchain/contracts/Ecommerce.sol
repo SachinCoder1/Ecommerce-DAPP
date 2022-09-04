@@ -9,7 +9,7 @@ contract Ecommerce {
     uint256 productId;
     address private owner;
 
-    constructor(){
+    constructor() {
         owner = msg.sender;
     }
 
@@ -33,9 +33,9 @@ contract Ecommerce {
     // After buying the product
     event productBought(
         address indexed buyer,
+        uint256 indexed _productId,
         uint256 indexed timestamp,
-        uint256 price,
-        uint256 _productId
+        uint256 price
     );
 
     /* Modifiers */
@@ -76,6 +76,11 @@ contract Ecommerce {
         return s_AllProducts[_productId];
     }
 
+    // Get the total contract balance
+    function getContractBalance() external view returns (uint256) {
+        return address(this).balance;
+    }
+
     function updateQuantity(uint32 _quantity, uint256 _productId) external {
         s_AllProducts[_productId].quantity = _quantity;
     }
@@ -85,50 +90,11 @@ contract Ecommerce {
             revert Ecommerce__PriceNotMet(msg.value);
         }
 
-        emit productBought(msg.sender, block.timestamp, msg.value, _productId);
+        emit productBought(msg.sender, _productId, block.timestamp, msg.value);
+    }
+
+    // Withdraw the contract balance.
+    function withdraw(address _to) external payable onlyOwner {
+        payable(_to).transfer(address(this).balance);
     }
 }
-
-// contract Product {
-//     error Product__PriceNotMet(uint256 _price);
-//     /* State Variables */
-//     struct ProductStruct {
-//         uint256 price;
-//         uint32 quantity;
-//         string metadata;
-//     }
-
-//     /* events */
-//     event productBought(
-//         address indexed buyer,
-//         uint256 indexed timestamp,
-//         uint256 price
-//     );
-
-//     ProductStruct newProduct;
-
-//     constructor(
-//         uint256 _price,
-//         uint32 _quantity,
-//         string memory _metadata
-//     ) {
-//         newProduct = ProductStruct(_price, _quantity, _metadata);
-//     }
-
-//     /* Getter Functions */
-//     function getProduct() external view returns (ProductStruct memory) {
-//         return newProduct;
-//     }
-
-//     function updateQuantity(uint32 _quantity) external {
-//         newProduct.quantity = _quantity;
-//     }
-
-//     function buyProduct() external payable {
-//         if (msg.value != newProduct.price) {
-//             revert Product__PriceNotMet(msg.value);
-//         }
-
-//         emit productBought(msg.sender, block.timestamp, msg.value);
-//     }
-// }

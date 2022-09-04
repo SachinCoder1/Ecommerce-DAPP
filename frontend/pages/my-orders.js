@@ -4,7 +4,41 @@ import { MainContext } from "../context/MainContext";
 import MainLayout from "../layouts/MainLayout";
 
 export default function Myorders() {
-  const { accountAddress } = useContext(MainContext);
+  const { accountAddress, requestContract } = useContext(MainContext);
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const Request = async () => {
+      if (accountAddress) {
+        try {
+          setIsLoading(true);
+          const contract = await requestContract();
+
+          const getBoughtEvents = contract.filters.productBought(
+            accountAddress
+          );
+          const AllCampaigns = await contract.queryFilter(getBoughtEvents);
+          const MyData = AllCampaigns.map((e) => {
+            return {
+              title: e.args._title,
+              description: e.args._description,
+              image: e.args._image,
+              owner: e.args._campaignOwner,
+              timeStamp: parseInt(e.args._timestamp),
+              amount: ethers.utils.formatEther(e.args._requiredAmount),
+              address: e.args._campaignAddress,
+            };
+          });
+          setMyCampaigns(MyData);
+          setIsLoading(false);
+        } catch (error) {
+          setIsLoading(false);
+          console.log("error....", error);
+        }
+      }
+    };
+    Request();
+  }, [accountAddress]);
   
   return (
     <MainLayout>
