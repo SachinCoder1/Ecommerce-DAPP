@@ -6,7 +6,7 @@ error Ecommerce__PriceNotMet(uint256 _price);
 
 contract Ecommerce {
     /* State Variables */
-    uint256 productId;
+    uint256 private productId;
     address private owner;
 
     constructor() {
