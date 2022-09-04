@@ -50,7 +50,7 @@ export default function Card1({ metadata, price, publishedDate, productId }) {
         <Typography className="flex items-center gap-x-1" variant="lead">
           <FaEthereum className="text-[#3c3c3d]" /> {price} ETH
         </Typography>
-        {/* <Typography
+        {/* <Typography 
             variant="small"
             color="gray"
             className="flex gap-1 items-center"

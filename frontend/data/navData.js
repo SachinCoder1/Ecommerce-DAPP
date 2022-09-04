@@ -9,8 +9,8 @@ export const navLinks = [
     icon: <TbLayoutDashboard />,
   },
   {
-    title: "Your Past Campaigns",
-    link: "/pastcampigns",
+    title: "Your Past Orders",
+    link: "/my-orders",
     icon: <HiTemplate />,
   },
   {
