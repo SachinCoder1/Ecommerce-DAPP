@@ -12,7 +12,6 @@ export default function Home({ AllData }) {
   console.log("All Data ", AllData);
   return (
     <MainLayout>
-      <ToastContainer autoClose={2500} />
       <div className="flex flex-wrap items-center gap-10">
         {AllData.length
           ? AllData.map((item, index) => (

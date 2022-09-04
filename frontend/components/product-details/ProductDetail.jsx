@@ -49,7 +49,11 @@ export default function ProductDetail({
                 <p className="text-gray-600 text-3xl gap-x-1 flex items-center">
                   Total Quantity Available : {quantity} Units
                   <span>
-                    <Modal open={open} setOpen={setOpen} text={parsedMetaData.title}>
+                    <Modal
+                      open={open}
+                      setOpen={setOpen}
+                      text={parsedMetaData.title}
+                    >
                       <div className="flex w-full text-center flex-col space-y-5">
                         <Typography
                           variant="lead"
