@@ -3,6 +3,8 @@ import { ethers } from "ethers";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Button } from "@material-tailwind/react";
 import { MainContext } from "../../context/MainContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const networks = {
@@ -29,13 +31,12 @@ export default function WalletConnect() {
       if (window.ethereum) {
         window.ethereum.on("accountsChanged", (accounts) => {
           if (accounts.length > 0) {
-            console.log(accounts);
             setAccountAddress(accounts[0]);
             connectWallet();
             console.log("Account Changed");
           } else {
+            toast.warn("You are Disconnected")
             setAccountAddress("");
-            console.log(accounts);
             setBalance("");
             localStorage.removeItem("injected");
             console.log("Disconnected");
@@ -77,6 +78,7 @@ export default function WalletConnect() {
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      toast.error("Error Encountered! Please try to Connect Wallet Again.")
       console.log("Error while connected wallet ", error);
     }
   };
@@ -85,6 +87,7 @@ export default function WalletConnect() {
     <div>
       {accountAddress.length > 2 ? (
         <div className="bg-slate-200 py-2.5 rounded-2xl pl-4 cursor-pointer">
+          <ToastContainer autoClose={2500} />
           <span className="text-black">
             {accountAddress.slice(0, 6)}...{accountAddress.slice(accountAddress.length - 4)}
           </span>

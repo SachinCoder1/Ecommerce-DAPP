@@ -17,8 +17,8 @@ export default function Myorders() {
           const getBoughtEvents = contract.filters.productBought(
             accountAddress
           );
-          const AllCampaigns = await contract.queryFilter(getBoughtEvents);
-          const MyData = AllCampaigns.map((e) => {
+          const AllBoughtProducts = await contract.queryFilter(getBoughtEvents);
+          const MyData = AllBoughtProducts.map((e) => {
             return {
               title: e.args._title,
               description: e.args._description,

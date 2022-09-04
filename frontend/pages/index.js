@@ -1,6 +1,4 @@
-import Head from "next/head";
-import Image from "next/image";
-import { CONTRACT_ADDRESS, IPFS_URL } from "../constants";
+import { CONTRACT_ADDRESS } from "../constants";
 import ContractABI from "../constants/Ecommerce.json";
 import MainLayout from "../layouts/MainLayout";
 import { ethers } from "ethers";

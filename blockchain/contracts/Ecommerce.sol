@@ -25,16 +25,16 @@ contract Ecommerce {
     event productAdded(
         string indexed _category,
         uint256 indexed _timestamp,
-        uint256 indexed _price,
-        uint256 _productId,
+        uint256 indexed _productId,
+        uint256 _price,
         string _metadata
     );
 
     // After buying the product
     event productBought(
         address indexed buyer,
-        uint256 indexed _productId,
         uint256 indexed timestamp,
+        uint256 _productId,
         uint256 price
     );
 
@@ -62,8 +62,8 @@ contract Ecommerce {
         emit productAdded(
             _category,
             block.timestamp,
-            _price,
             productId,
+            _price,
             _metadata
         );
     }
@@ -90,7 +90,7 @@ contract Ecommerce {
             revert Ecommerce__PriceNotMet(msg.value);
         }
 
-        emit productBought(msg.sender, _productId, block.timestamp, msg.value);
+        emit productBought(msg.sender, block.timestamp, _productId, msg.value);
     }
 
     // Withdraw the contract balance.
