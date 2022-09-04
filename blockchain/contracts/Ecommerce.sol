@@ -35,7 +35,8 @@ contract Ecommerce {
         address indexed buyer,
         uint256 indexed timestamp,
         uint256 _productId,
-        uint256 price
+        uint256 price,
+        string metadata
     );
 
     /* Modifiers */
@@ -89,8 +90,15 @@ contract Ecommerce {
         if (msg.value != s_AllProducts[_productId].price) {
             revert Ecommerce__PriceNotMet(msg.value);
         }
+        string memory metadata = s_AllProducts[_productId].metadata;
 
-        emit productBought(msg.sender, block.timestamp, _productId, msg.value);
+        emit productBought(
+            msg.sender,
+            block.timestamp,
+            _productId,
+            msg.value,
+            metadata
+        );
     }
 
     // Withdraw the contract balance.
