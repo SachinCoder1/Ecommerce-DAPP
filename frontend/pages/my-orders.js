@@ -20,7 +20,7 @@ export default function Myorders() {
           const getBoughtEvents = contract.filters.productBought(accountAddress);
           const AllBoughtProducts = await contract.queryFilter(
             getBoughtEvents,
-            currentBlock - 999,
+            currentBlock - 1000,
             currentBlock
           );
           // console.log(AllBoughtProducts);
@@ -60,7 +60,12 @@ export default function Myorders() {
               />
               ))
           : !myProducts.length && !isLoading
-          ? "No Campaigns Found"
+          ? <ErrorPage
+          title="No Products Found"
+          description="Buy some products... If you are concerned About Money then check our T-Shirts because it's affordable to start with."
+          image="/images/logo.jpg"
+          alt="Connect Wallet"
+        />
           : "Loading..."}
       </div>
       ) : (

@@ -17,7 +17,7 @@ import { IPFS_URL } from "../../constants";
 import { useContext, useState, useEffect } from "react";
 import { MainContext } from "../../context/MainContext";
 
-export default function Card1({ metadata, price, publishedDate, productId }) {
+export default function Card1({ metadata, price, publishedDate, productId, selectedCategory }) {
   const router = useRouter();
   const { isAdmin } = useContext(MainContext);
   const [parsedMetaData, setParsedMetaData] = useState({})
@@ -30,7 +30,7 @@ export default function Card1({ metadata, price, publishedDate, productId }) {
     } 
     fetchMetaData();
     
-  }, [])
+  }, [price, selectedCategory])
   
   return (
     <Card className="w-96 cursor-pointer md:hover:scale-105 transition-all hover:shadow-xl">

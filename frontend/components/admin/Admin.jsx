@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   CONTRACT_ADDRESS,
   IPFS_URL,
@@ -23,8 +23,10 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ethers } from "ethers";
+import { MainContext } from "../../context/MainContext";
 
 export default function Admin() {
+  const {requestContract} = useContext(MainContext);
   /* IPFS Authentication ------------------------------------------------------------------ */
 
   const auth =
@@ -106,8 +108,6 @@ export default function Admin() {
         signer
       );
 
-
-
       const productData = await contract.addProduct(
         amountInWEI,
         qunatity,
@@ -186,13 +186,13 @@ export default function Admin() {
           label="Total Quantity Of Product"
           value={formData.qunatity}
         />
-        <div className="md:flex space-y-7 gap-x-4 w-full justify-center">
+        <div className="md:flex items-center md:space-y-0 space-y-7 gap-x-4 w-full justify-center">
           <Input
-            // color="green"
             variant="outlined"
             name="price"
             onChange={handleInputChange}
             label="Product Price"
+            value={formData.price}
           />
           <Select
             // color="green"

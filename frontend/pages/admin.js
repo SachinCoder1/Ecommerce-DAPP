@@ -31,7 +31,7 @@ export default function admin() {
           <TabComp data={tabData} />
         </div>
           : <ErrorPage title="You are Not The Owner" description="Contact the owner if you want to request any Product." image="/images/login-img.webp" alt="login" />
-        : "Connect Wallet First"}
+        : <ErrorPage title="Connect Wallet First !" description="Connecting Your Wallet will give you a Super Power to Buy the Order, See The Order." image="/images/login-img.webp" alt="login" />}
     </MainLayout>
   );
 }

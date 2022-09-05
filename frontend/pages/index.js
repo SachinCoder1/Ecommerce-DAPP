@@ -2,27 +2,75 @@ import { CONTRACT_ADDRESS } from "../constants";
 import ContractABI from "../constants/Ecommerce.json";
 import MainLayout from "../layouts/MainLayout";
 import { ethers } from "ethers";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card1 from "../subcomponents/card/Card1";
+import Categories from "../components/categories/Categories";
+import { Typography } from "@material-tailwind/react";
 
-export default function Home({ AllData }) {
+export default function Home({
+  AllData,
+  MobileData,
+  FashionData,
+  ElectronicData,
+  LaptopData,
+  CameraData,
+  ToysData,
+}) {
   const [isLoading, setIsLoading] = useState(false);
-  console.log("All Data ", AllData);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategoryData, setSelectedCategoryData] = useState([]);
+  // console.log("All Data ", AllData);
+  useEffect(() => {
+    switch (selectedCategory) {
+      case "all":
+        setSelectedCategoryData(AllData);
+        console.log(selectedCategory, "-> ", selectedCategoryData)
+        break;
+        case "mobile":
+          setSelectedCategoryData(MobileData);
+          console.log(selectedCategory, "-> ", selectedCategoryData)
+          break;
+          case "fashion":
+            setSelectedCategoryData(FashionData);
+            console.log(selectedCategory, "-> ", selectedCategoryData)
+        break;
+      case "electronics":
+        setSelectedCategoryData(ElectronicData);
+        break;
+      case "laptop":
+        setSelectedCategoryData(LaptopData);
+        break;
+      case "camera":
+        setSelectedCategoryData(CameraData);
+        break;
+      case "toys":
+        setSelectedCategoryData(ToysData);
+        break;
+      default:
+        setSelectedCategoryData(AllData);
+        break;
+      
+    }
+  }, [selectedCategory]);
+
   return (
     <MainLayout>
-      <div className="flex flex-wrap items-center gap-10">
-        {AllData.length
-          ? AllData.map((item, index) => (
-                <Card1
+      <Categories setSelectedCategory={setSelectedCategory} />
+      <Typography className="mt-4" variant="h3">{selectedCategory.toUpperCase()}</Typography>
+      <div className="flex mt-10 flex-wrap items-center gap-10">
+        {selectedCategoryData.length
+          ? selectedCategoryData.map((item, index) => (
+              <Card1
                 key={index}
+                selectedCategory={selectedCategory}
                 metadata={item.metadata}
                 price={item.price}
                 publishedDate={item.timeStamp}
                 productId={item.productId}
               />
-              ))
-          : !AllData.length && !isLoading
-          ? "No Campaigns Found"
+            ))
+          : !selectedCategoryData.length && !isLoading
+          ? "No Product Found"
           : "Loading..."}
       </div>
     </MainLayout>
@@ -44,6 +92,7 @@ export async function getStaticProps() {
     const AllProducts = await contract.queryFilter(getAllProducts);
     const mappedData = AllProducts.map((e) => {
       const args = e.args;
+      console.log('Args -> ', e)
       return {
         metadata: args._metadata,
         productId: parseInt(args._productId),
@@ -55,10 +104,22 @@ export async function getStaticProps() {
   };
 
   const AllData = await getEventData(null);
+  const MobileData = await getEventData("mobile");
+  const FashionData = await getEventData("fashion");
+  const ElectronicData = await getEventData("electronics");
+  const LaptopData = await getEventData("laptop");
+  const CameraData = await getEventData("camera");
+  const ToysData = await getEventData("toys");
 
   return {
     props: {
-      AllData: AllData,
+      AllData,
+      MobileData,
+      FashionData,
+      ElectronicData,
+      LaptopData,
+      CameraData,
+      ToysData,
     },
   };
 }
