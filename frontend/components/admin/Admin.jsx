@@ -17,6 +17,7 @@ import {
   Option,
   Button,
   IconButton,
+  Typography,
 } from "@material-tailwind/react";
 // import TsParticles from "../../subcomponents/particles-ts/TsParticles";
 import { ToastContainer, toast } from "react-toastify";
@@ -136,11 +137,12 @@ export default function Admin() {
   };
 
   return (
-    <div className="flex justify-center py-14 px-5">
+    <div className="w-5/6 py-5 mx-auto space-y-5">
+     <Typography variant="h3">Add Product</Typography>
       {/* <TsParticles /> */}
       <ToastContainer autoClose={2500} />
 
-      <div className="md:w-3/6 space-y-10 text-white">
+      <div className="space-y-7 text-white">
         <Input
           // color="green"
           variant="outlined"
@@ -196,7 +198,7 @@ export default function Admin() {
             // color="green"
             variant="outlined"
             onChange={(e) => setCategory(e)}
-            label="Proeduct Category"
+            label="Product Category"
           >
             {categories?.map((item, index) => (
               <Option key={index} value={item.value}>

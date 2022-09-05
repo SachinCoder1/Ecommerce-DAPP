@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import ErrorPage from "../components/404-page/ErrorPage";
 import { MainContext } from "../context/MainContext";
 import MainLayout from "../layouts/MainLayout";
+import Card1 from "../subcomponents/card/Card1";
 
 export default function Myorders() {
   const { accountAddress, currentBlock, requestContract } = useContext(MainContext);
@@ -19,7 +20,7 @@ export default function Myorders() {
           const getBoughtEvents = contract.filters.productBought();
           const AllBoughtProducts = await contract.queryFilter(
             getBoughtEvents,
-            currentBlock - 1000,
+            currentBlock - 999,
             currentBlock
           );
           // console.log(AllBoughtProducts);
@@ -47,7 +48,21 @@ export default function Myorders() {
   return (
     <MainLayout>
       {accountAddress ? (
-        "Hey"
+        <div className="flex flex-wrap items-center gap-10">
+        {myProducts.length
+          ? myProducts.map((item, index) => (
+                <Card1
+                key={index}
+                metadata={item.metadata}
+                price={item.price}
+                publishedDate={item.timeStamp}
+                productId={item.productId}
+              />
+              ))
+          : !myProducts.length && !isLoading
+          ? "No Campaigns Found"
+          : "Loading..."}
+      </div>
       ) : (
         <ErrorPage
           title="Connect Wallet First"
