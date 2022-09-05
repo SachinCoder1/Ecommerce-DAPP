@@ -33,7 +33,6 @@ export default function WalletConnect() {
           if (accounts.length > 0) {
             setAccountAddress(accounts[0]);
             connectWallet();
-            console.log("Account Changed");
           } else {
             setAccountAddress("");
             setBalance("");

@@ -1,21 +1,22 @@
 import { TbLayoutDashboard } from "react-icons/tb";
 import { HiTemplate } from "react-icons/hi";
 import { AiFillCrown } from "react-icons/ai";
+import { urls } from "../constants";
 
 export const navLinks = [
   {
     title: "Dashboard",
-    link: "/",
+    link: urls.home,
     icon: <TbLayoutDashboard />,
   },
   {
     title: "Your Past Orders",
-    link: "/my-orders",
+    link: urls.pastOrders,
     icon: <HiTemplate />,
   },
   {
-    title: "Create Campaign",
-    link: "/createcampaign",
+    title: "Admin",
+    link: urls.admin,
     icon: <AiFillCrown />,
   },
 ];

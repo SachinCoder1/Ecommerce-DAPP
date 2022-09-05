@@ -94,10 +94,8 @@ export default function Admin() {
       const add = await client.add(stringifyData);
       const url = `${add.path}`;
       toast.success("Product Data Uploaded!");
-      console.log("Meta Data URL -> ", url)
 
       const amountInWEI = ethers.utils.parseEther(price);
-      console.log("amount in wei -> ", amountInWEI)
 
       const contract = await requestContract()
 

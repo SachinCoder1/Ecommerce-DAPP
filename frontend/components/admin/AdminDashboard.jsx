@@ -17,7 +17,7 @@ export default function AdminDashboard() {
     const contract = await requestContract();
     const getBalance = await contract.getContractBalance();
     const formatEther = ethers.utils.formatEther(getBalance);
-    console.log(formatEther);
+    // console.log(formatEther);
     setContractBalance(formatEther);
     return formatEther;
   };

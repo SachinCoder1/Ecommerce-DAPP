@@ -33,7 +33,6 @@ export default function Myorders() {
               timeStamp: parseInt(args.timestamp),
             };
           });
-          console.log("Buying Data -> ", MyData);
           setMyProducts(MyData);
           setIsLoading(false);
         } catch (error) {

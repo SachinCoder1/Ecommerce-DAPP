@@ -19,20 +19,16 @@ export default function Home({
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedCategoryData, setSelectedCategoryData] = useState([]);
-  // console.log("All Data ", AllData);
   useEffect(() => {
     switch (selectedCategory) {
       case "all":
         setSelectedCategoryData(AllData);
-        console.log(selectedCategory, "-> ", selectedCategoryData)
         break;
         case "mobile":
           setSelectedCategoryData(MobileData);
-          console.log(selectedCategory, "-> ", selectedCategoryData)
           break;
           case "fashion":
             setSelectedCategoryData(FashionData);
-            console.log(selectedCategory, "-> ", selectedCategoryData)
         break;
       case "electronics":
         setSelectedCategoryData(ElectronicData);
@@ -92,7 +88,6 @@ export async function getStaticProps() {
     const AllProducts = await contract.queryFilter(getAllProducts);
     const mappedData = AllProducts.map((e) => {
       const args = e.args;
-      console.log('Args -> ', e)
       return {
         metadata: args._metadata,
         productId: parseInt(args._productId),

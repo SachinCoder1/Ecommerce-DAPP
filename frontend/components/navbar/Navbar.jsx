@@ -48,7 +48,7 @@ export default function Navbar() {
 
               {/* After all nav links if you want any button in right then it will come here */}
               <div className="md:flex items-center gap-x-2 hidden">
-             {isAdmin() && <Button onClick={() => router.push(urls.admin)} variant="text">Not User?</Button> }
+             {isAdmin() && <Button onClick={() => router.push(urls.admin)} variant="text">Admin Center</Button> }
                 <WalletConnect />
               </div>
 
@@ -99,7 +99,7 @@ export default function Navbar() {
                     </a>
                   </Link>
                 ))}
-                {isAdmin() && <Button onClick={() => router.push(urls.admin)} variant="text">Not User?</Button> }
+                {isAdmin() && <Button onClick={() => router.push(urls.admin)} variant="text">Admin Center</Button> }
                 <WalletConnect />
               </div>
             </div>
