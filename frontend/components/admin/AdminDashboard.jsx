@@ -1,22 +1,59 @@
 import { Button, Input, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import { ethers } from "ethers";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { FaEthereum } from "react-icons/fa";
+import { MainContext } from "../../context/MainContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AdminDashboard() {
   const [isAdminWithdrawing, setIsAdminWithdrawing] = useState(false);
   const [withdrawAddress, setWithdrawAddress] = useState("");
+  const [contractBalance, setContractBalance] = useState("Wait..");
+  const { requestContract } = useContext(MainContext);
 
-  const withdrawMoney = () => {};
-  const [contractBalance, setContractBalance] = useState("2.2")
+  const getContractBalance = async () => {
+    const contract = await requestContract();
+    const getBalance = await contract.getContractBalance();
+    const formatEther = ethers.utils.formatEther(getBalance);
+    console.log(formatEther);
+    setContractBalance(formatEther);
+    return formatEther;
+  };
+  useEffect(() => {
+    getContractBalance();
+  }, []);
+
+  const withdrawMoney = async () => {
+    if (!withdrawAddress) return;
+    try {
+      toast.info("Wait..");
+      const contract = await requestContract();
+      const tx = await contract.withdraw(withdrawAddress);
+      toast.promise(tx.wait(), {
+        pending: "Wait...",
+        success: "Money Withdraw Success to Address -> " + withdrawAddress,
+        error: "Some Error Occured. 🤯",
+      });
+      await tx.wait();
+    } catch (error) {
+      console.log(error);
+      toast.error("Some Error Occured. 🤯");
+    }
+  };
   return (
     <div className="space-y-10">
+      <ToastContainer autoClose={2500} />
       <Typography variant="h3">Admin Dashobard</Typography>
       <div className="bg-white h-50 w-5/6 mx-auto p-10">
-        <Typography className="flex gap-x-2 items-center mb-6 font-semibold" variant="lead">
+        <Typography
+          className="flex gap-x-2 items-center mb-6 font-semibold"
+          variant="lead"
+        >
           <span className="text-gray-600 text-xl">Contract Balance :</span>
           <FaEthereum className="text-[#3c3c3d]" />
-          {contractBalance} Ether
+          {contractBalance && contractBalance} Ether
         </Typography>
         {isAdminWithdrawing && (
           <>
