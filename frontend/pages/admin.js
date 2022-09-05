@@ -6,7 +6,7 @@ import TabComp from "../components/admin/TabComp";
 import { MainContext } from "../context/MainContext";
 import MainLayout from "../layouts/MainLayout";
 
-export default function admin() {
+export default function AdminPage() {
   const { accountAddress, isAdmin } = useContext(MainContext);
   const tabData = [
     {

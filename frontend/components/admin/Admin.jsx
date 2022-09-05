@@ -99,14 +99,7 @@ export default function Admin() {
       const amountInWEI = ethers.utils.parseEther(price);
       console.log("amount in wei -> ", amountInWEI)
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        EcomABI.abi,
-        signer
-      );
+      const contract = await requestContract()
 
       const productData = await contract.addProduct(
         amountInWEI,
@@ -127,7 +120,6 @@ export default function Admin() {
         setCategory("");
         setIsLoading(false);
         
-        //  router.push("/pastcampigns");
       }
     } catch (error) {
       console.log("error... ", error);

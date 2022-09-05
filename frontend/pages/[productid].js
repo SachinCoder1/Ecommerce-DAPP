@@ -3,18 +3,19 @@ import { ethers } from "ethers";
 import React, { useContext, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import ProductDetail from "../components/product-details/ProductDetail";
-import { CONTRACT_ADDRESS } from "../constants";
+import { CONTRACT_ADDRESS, urls } from "../constants";
 import ContractABI from "../constants/Ecommerce.json";
 import { MainContext } from "../context/MainContext";
 import MainLayout from "../layouts/MainLayout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 export default function Productid({ ProductIdData }) {
-  console.log("This is the product data -> ", ProductIdData);
+  const router = useRouter();
   const { accountAddress, requestContract } = useContext(MainContext);
   const [quantityInput, setQuantityInput] = useState("");
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const transferFund = async () => {
     try {
@@ -57,6 +58,7 @@ export default function Productid({ ProductIdData }) {
       });
       await tx.wait();
       setQuantityInput("");
+      router.push(urls.pastOrders);
     } catch (error) {
       console.log(error);
       toast.error("Some Error Occured. Please try again 🤯");
@@ -67,8 +69,8 @@ export default function Productid({ ProductIdData }) {
     <MainLayout>
       <ToastContainer autoClose={2500} />
       <ProductDetail
-      open={open}
-      setOpen={setOpen}
+        open={open}
+        setOpen={setOpen}
         updateProduct={updateProductByAdmin}
         quantityInput={quantityInput}
         setQuantityInput={setQuantityInput}
