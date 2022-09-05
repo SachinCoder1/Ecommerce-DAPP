@@ -17,7 +17,7 @@ export default function Myorders() {
           setIsLoading(true);
           const contract = await requestContract();
 
-          const getBoughtEvents = contract.filters.productBought();
+          const getBoughtEvents = contract.filters.productBought(accountAddress);
           const AllBoughtProducts = await contract.queryFilter(
             getBoughtEvents,
             currentBlock - 999,
