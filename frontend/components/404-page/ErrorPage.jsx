@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import Logo from '../../subcomponents/logo/Logo'
 
@@ -18,11 +19,11 @@ export default function ErrorPage({title, description, image, alt}) {
               <p>Use the Go Back button below.</p>
             </div>
             <div className="mb-20 md:mb-0">
-              <a href="/">
+              <Link href="/">
                 <button className="text-lg font-light outline-none focus:outline-none transform transition-all hover:scale-110 text-primary hover:text-primary-darker">
                   <i className="mdi mdi-arrow-left mr-2"></i>Home
                 </button>
-              </a>
+              </Link>
             </div>
           </div>
 
