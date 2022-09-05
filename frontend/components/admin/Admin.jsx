@@ -186,7 +186,7 @@ export default function Admin() {
           label="Total Quantity Of Product"
           value={formData.qunatity}
         />
-        <div className="flex gap-x-4 w-full justify-center">
+        <div className="md:flex space-y-7 gap-x-4 w-full justify-center">
           <Input
             // color="green"
             variant="outlined"

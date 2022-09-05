@@ -46,14 +46,16 @@ export default function AdminDashboard() {
     <div className="space-y-10">
       <ToastContainer autoClose={2500} />
       <Typography variant="h3">Admin Dashobard</Typography>
-      <div className="bg-white h-50 w-5/6 mx-auto p-10">
+      <div className="bg-white h-50 md:w-5/6 mx-auto p-10 md:m-0 m-1">
         <Typography
-          className="flex gap-x-2 items-center mb-6 font-semibold"
+          className="md:flex gap-x-2 items-center mb-6 font-semibold"
           variant="lead"
         >
-          <span className="text-gray-600 text-xl">Contract Balance :</span>
+         <span className="text-gray-600 text-xl">Contract Balance :</span>
+         <span className="flex items-center gap-x-1">
           <FaEthereum className="text-[#3c3c3d]" />
           {contractBalance && contractBalance} Ether
+            </span> 
         </Typography>
         {isAdminWithdrawing && (
           <>

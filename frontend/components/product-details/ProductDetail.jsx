@@ -46,7 +46,7 @@ export default function ProductDetail({
                   {parsedMetaData?.title}
                 </p>
                 <p className="text-gray-600">{parsedMetaData?.description}</p>
-                <p className="text-gray-600 text-3xl gap-x-1 flex items-center">
+                <p className="text-gray-600 md:text-3xl text-xl gap-x-1 flex items-center">
                   Total Quantity Available : {quantity} Units
                   <span>
                     <Modal
@@ -85,13 +85,13 @@ export default function ProductDetail({
                     </Modal>
                   </span>
                 </p>
-                <p className="font-bold md:text-4xl text-3xl text-green-500 flex items-center gap-x-1.5">
+                <p className="mb-5 font-bold md:text-4xl text-3xl text-primary flex items-center gap-x-1.5">
                   <span className="text-gray-600 text-xl">Price :</span>
                   <FaEthereum className="text-[#3c3c3d]" />
                   {price} Ether
                 </p>
               </div>
-              <div>{children}</div>
+              <div className="mt-4">{children}</div>
             </div>
           </div>
         </div>

@@ -27,7 +27,7 @@ export default function admin() {
     <MainLayout addPM={false}>
       {accountAddress
         ? isAdmin()
-          ?  <div className="my-5 py-5 md:px-3 w-4/6 mx-auto">
+          ?  <div className="my-5 py-5 md:px-3 md:w-4/6 md:mx-auto mx-3">
           <TabComp data={tabData} />
         </div>
           : <ErrorPage title="You are Not The Owner" description="Contact the owner if you want to request any Product." image="/images/login-img.webp" alt="login" />

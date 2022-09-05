@@ -9,7 +9,8 @@ module.exports = withMT({
   theme: {
     colors: {
       primary: {
-        DEFAULT: "#4CAF50",
+        // DEFAULT: "#76528BFF",
+        DEFAULT: "#5F4B8BFF",
       }
     },
   },

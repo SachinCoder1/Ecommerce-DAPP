@@ -35,7 +35,6 @@ export default function WalletConnect() {
             connectWallet();
             console.log("Account Changed");
           } else {
-            toast.warn("You are Disconnected")
             setAccountAddress("");
             setBalance("");
             localStorage.removeItem("injected");
