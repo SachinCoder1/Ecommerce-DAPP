@@ -7,6 +7,7 @@ export const MainContext = createContext("");
 
 export const MainProvider = ({ children }) => {
   const [accountAddress, setAccountAddress] = useState("");
+  const [currentBlock, setCurrentBlock] = useState(0)
 
   const isAdmin = () => {
     if(!accountAddress) return false;
@@ -27,6 +28,8 @@ export const MainProvider = ({ children }) => {
           ContractABI.abi,
           signer
         );
+        const blockNumber = await provider.getBlockNumber();
+        setCurrentBlock(blockNumber)
 
         return contract;
   }
@@ -35,6 +38,7 @@ export const MainProvider = ({ children }) => {
     <MainContext.Provider
       value={{
         accountAddress,
+        currentBlock,
         setAccountAddress,
         isAdmin,
         requestContract
